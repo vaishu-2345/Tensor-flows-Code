@@ -1,0 +1,29 @@
+import numpy as np
+import tensorflow as tf
+import matplotlib.pyplot as plt
+y_true = tf.constant([[0, 1, 0]], dtype=tf.float32)
+y_pred1 = tf.constant([[0.1, 0.8, 0.1]], dtype=tf.float32)
+y_pred2 = tf.constant([[0.2, 0.6, 0.2]], dtype=tf.float32)
+mse1 = tf.keras.losses.MeanSquaredError()(y_true, y_pred1).numpy()
+mse2 = tf.keras.losses.MeanSquaredError()(y_true, y_pred2).numpy()
+
+cce1 = tf.keras.losses.CategoricalCrossentropy()(y_true, y_pred1).numpy()
+cce2 = tf.keras.losses.CategoricalCrossentropy()(y_true, y_pred2).numpy()
+
+print(f"MSE (pred1): {mse1:.4f}, MSE (pred2): {mse2:.4f}")
+print(f"CCE (pred1): {cce1:.4f}, CCE (pred2): {cce2:.4f}")
+labels = ['Pred1', 'Pred2']
+mse_values = [mse1, mse2]
+cce_values = [cce1, cce2]
+
+x = np.arange(len(labels))
+width = 0.35
+
+plt.bar(x - width/2, mse_values, width, label='MSE')
+plt.bar(x + width/2, cce_values, width, label='CCE')
+plt.ylabel('Loss')
+plt.title('Comparison of Loss Functions')
+plt.xticks(x, labels)
+plt.legend()
+plt.show()
+
